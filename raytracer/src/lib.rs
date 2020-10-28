@@ -3,3 +3,7 @@ pub mod scene;
 pub mod point; 
 pub mod vector;
 pub mod sphere;  
+pub mod color; 
+pub mod light; 
+pub mod math; 
+pub mod material; 

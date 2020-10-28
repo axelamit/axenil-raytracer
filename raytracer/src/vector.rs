@@ -35,8 +35,12 @@ impl Vector3 {
         }
     }
 
-    pub fn length(&self) -> f64 {
-        (self.x*self.x + self.y*self.y + self.z*self.z).sqrt()
+    pub fn multiply(&self, scalar: f64) -> Vector3 {
+        Vector3{
+            x: self.x*scalar,
+            y: self.y*scalar,
+            z: self.z*scalar, 
+        }
     }
 
     pub fn normalize(&self) -> Vector3{
@@ -50,5 +54,21 @@ impl Vector3 {
 
     pub fn dot(&self, vector: &Vector3) -> f64 {
         self.x*vector.x+self.y*vector.y+self.z*vector.z
+    }
+
+    pub fn neg(&self) -> Vector3{
+        self.multiply(-1.0)
+    }
+
+    pub fn length(&self) -> f64{
+        self.dot(&self).sqrt()
+    }
+
+    pub fn copy(&self) -> Vector3{
+        Vector3{
+            x: self.x,
+            y: self.y,
+            z: self.z,
+        }
     }
 }

@@ -1,30 +1,39 @@
-use crate::vector::Vector3;
-use crate::point::Point;  
+use crate::vector::Vector3; 
+use crate::color::Color; 
+use crate::point::Point; 
 use crate::ray::Ray; 
-use crate::color::*; 
-use crate::material::Material; 
 
-pub struct Sphere{
-    pub center: Point,
-    pub radius: f64, 
+pub struct DirectionalLight {
+    pub direction: Vector3,
     pub color: Color, 
-    pub albedo: f64, 
-    pub material: Material,
-} 
+    pub intensity: f64, 
+}
 
-impl Sphere{
-    pub fn new(center: Point, radius: f64, color: Color, albedo: f64, material: Material) -> Sphere{
-        Sphere{
+impl DirectionalLight{
+    pub fn new(direction: Vector3, color: Color, intensity: f64) -> DirectionalLight{
+        DirectionalLight{
+            direction: direction,
+            color: color,
+            intensity: intensity,
+        }
+    }
+}
+
+pub struct SphericalLight{
+    pub center: Point, 
+    pub radius: f64, 
+    pub color: Color,
+    pub intensity: f64, 
+}
+
+impl SphericalLight{
+    pub fn new(center: Point, radius: f64, color: Color, intensity: f64) -> SphericalLight{
+        SphericalLight{
             center: center,
             radius: radius,
             color: color,
-            albedo: albedo, 
-            material: material, 
+            intensity: intensity,
         }
-    }
-
-    pub fn normal(&self, point: &Point) -> Vector3{
-        point.subtract(&self.center).to_vector3().normalize()
     }
 
     pub fn intersect(&self, ray: &Ray) -> (bool, f64){

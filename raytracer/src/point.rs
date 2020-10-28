@@ -19,7 +19,7 @@ impl Point{
         Vector3::new(self.x, self.y, self.z)
     }
 
-    pub fn add(&self, point: Point) -> Point{
+    pub fn add(&self, point: &Point) -> Point{
         Point{
             x: self.x+point.x,
             y: self.y+point.y,
@@ -27,11 +27,19 @@ impl Point{
         }
     }
 
-    pub fn subtract(&self, point: Point) -> Point{
+    pub fn subtract(&self, point: &Point) -> Point{
         Point{
             x: self.x-point.x,
             y: self.y-point.y,
             z: self.z-point.z, 
+        }
+    }
+
+    pub fn copy(&self) -> Point{
+        Point{
+            x: self.x,
+            y: self.y,
+            z: self.z, 
         }
     }
 }
