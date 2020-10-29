@@ -7,3 +7,5 @@ pub mod color;
 pub mod light; 
 pub mod math; 
 pub mod material; 
+pub mod plane; 
+pub mod element; 

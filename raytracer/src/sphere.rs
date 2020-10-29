@@ -30,21 +30,35 @@ impl Sphere{
     pub fn intersect(&self, ray: &Ray) -> (bool, f64){
         let origin_center = self.center.subtract(&ray.origin).to_vector3();
 
-        let a = ray.direction.dot(&ray.direction); 
-        let b = 2.0*origin_center.dot(&ray.direction); 
-        let c = origin_center.dot(&origin_center) - (self.radius*self.radius); 
-        
-        let discriminant = b*b - 4.0*a*c; 
+        let projection_length2 = origin_center.dot(&ray.direction); 
+        let perpendicular2 = origin_center.dot(&origin_center) - (projection_length2*projection_length2); 
+        let radius2 = self.radius*self.radius; 
 
-        if discriminant < 0.0{
-            (false, 0.0)
+        if perpendicular2 > radius2{
+            return (false, -1.0)
         }
-        else{
-            let intersect_distance = (-b - (discriminant.sqrt()))/(2.0*a);
-            if intersect_distance < 0.0{
-                return (true, intersect_distance.abs())
-            }
-            (false, intersect_distance)
+
+        let add = (radius2 - perpendicular2).sqrt(); 
+        let intersection0 = projection_length2 - add; 
+        let intersection1 = projection_length2 + add; 
+
+        if intersection0 < 0.0 && intersection1 < 0.0{
+            return (false, -1.0)
         }
+
+        let distance = if intersection0 < intersection1 {intersection0} else {intersection1}; 
+        return (true, distance)
+    }
+
+    pub fn get_material(&self) -> &Material{
+        &self.material
+    }
+
+    pub fn get_albedo(&self) -> f64{
+        self.albedo
+    }
+
+    pub fn get_color(&self) -> &Color{
+        &self.color
     }
 }
