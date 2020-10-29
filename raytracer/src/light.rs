@@ -39,23 +39,23 @@ impl SphericalLight{
     pub fn intersect(&self, ray: &Ray) -> (bool, f64){
         let origin_center = self.center.subtract(&ray.origin).to_vector3();
 
-        let adj = origin_center.dot(&ray.direction); 
-        let d2 = origin_center.dot(&origin_center) - (adj*adj); 
-        let radius2 = self.radius * self.radius; 
+        let projection_length2 = origin_center.dot(&ray.direction); 
+        let perpendicular2 = origin_center.dot(&origin_center) - (projection_length2*projection_length2); 
+        let radius2 = self.radius*self.radius; 
 
-        if d2 > radius2{
+        if perpendicular2 > radius2{
             return (false, -1.0)
         }
 
-        let thc = (radius2 - d2).sqrt(); 
-        let t0 = adj - thc; 
-        let t1 = adj + thc; 
+        let add = (radius2 - perpendicular2).sqrt(); 
+        let intersection0 = projection_length2 - add; 
+        let intersection1 = projection_length2 + add; 
 
-        if t0 < 0.0 && t1 < 0.0{
+        if intersection0 < 0.0 && intersection1 < 0.0{
             return (false, -1.0)
         }
 
-        let distance = if t0 < t1 {t0} else {t1}; 
+        let distance = if intersection0 < intersection1 {intersection0} else {intersection1}; 
         return (true, distance)
     }
 }
