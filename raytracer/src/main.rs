@@ -1,7 +1,7 @@
-use raytracer::scene::Scene; 
+use raytracer::scene::Scene;
 
 fn main() {
-    let mut scene = Scene::new(); 
-    scene.test_scene(); 
-    scene.render(); 
+    let mut scene = Scene::new();
+    scene.test_scene();
+    scene.render();
 }
